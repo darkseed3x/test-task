@@ -1,0 +1,7 @@
+{
+    "packagesName": "org.manurin",
+    "apiPackage": "org.manurin.api",
+    "modelPackage": "org.manurin.model",
+    "invokerPackage": "org.manurin.invoker",
+    "interfaceOnly": true
+}

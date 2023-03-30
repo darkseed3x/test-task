@@ -1,0 +1,67 @@
+plugins {
+    id 'java'
+    id 'io.quarkus'
+    id "org.openapi.generator" version "6.0.0"
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+    implementation 'io.quarkus:quarkus-resteasy-reactive-jackson'
+    implementation 'io.quarkus:quarkus-flyway'
+    implementation 'io.quarkus:quarkus-smallrye-openapi'
+    implementation 'io.quarkus:quarkus-config-yaml'
+    implementation 'io.quarkus:quarkus-jackson'
+    implementation 'io.quarkus:quarkus-logging-json'
+    implementation 'io.quarkus:quarkus-jdbc-postgresql'
+    implementation 'io.quarkus:quarkus-arc'
+
+    implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.0.16.Final'
+
+    implementation 'io.quarkus:quarkus-resteasy-reactive'
+    implementation group: 'io.swagger', name: 'swagger-annotations', version: '1.6.0'
+    implementation 'io.quarkus:quarkus-vertx-web'
+
+    testImplementation 'io.quarkus:quarkus-junit5'
+    testImplementation 'io.rest-assured:rest-assured'
+}
+
+group 'org.manurin'
+version '1.0.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+test {
+    systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
+}
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-parameters'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+
+
+openApiValidate {
+    inputSpec = "${rootDir}/src/main/openapi/openapi.yaml"
+}
+
+openApiGenerate {
+    generatorName = 'jaxrs-spec'
+    configFile = "${rootDir}/src/main/resources/config.json"
+    inputSpec = "${rootDir}/src/main/resources/META-INF/openapi.yaml"
+    outputDir = "${rootDir}"
+}
+
+sourceSets.main.java.srcDir "${rootDir}/src/gen/java"
+
+compileJava.dependsOn tasks.openApiValidate, tasks.openApiGenerate

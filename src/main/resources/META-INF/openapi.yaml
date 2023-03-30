@@ -1,0 +1,106 @@
+openapi: 3.0.1
+info:
+  description: Сервис предназначен для создания и обновления тарифов и пакетов услуг
+  title: Tariff-Configurator
+  version: 1.0.0
+  x-product-version: v1
+  x-backend:
+    name: Tariff-Configurator
+    min-nodes: 1
+servers:
+- url: /web-conf/api
+paths:
+  /tariff:
+    get:
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/BundledProduct'
+                type: array
+          description: new fruit resource created
+      x-accepts: application/json
+    post:
+      operationId: tariffAdd
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tariff'
+      responses:
+        "200":
+          content:
+            application/json: {}
+          description: new fruit resource created
+      summary: Метод добавления таривоф
+      x-content-type: application/json
+      x-accepts: application/json
+      x-contentType: application/json
+components:
+  schemas:
+    Tariff:
+      example:
+        archived: false
+        deleted: false
+        package:
+          name: name
+          description: description
+        name: name
+        id: id
+        createDate: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          type: string
+        name:
+          maxLength: 128
+          type: string
+        createDate:
+          format: date-time
+          type: string
+        archived:
+          default: false
+          type: boolean
+        deleted:
+          default: false
+          type: boolean
+        bundledProduct:
+          $ref: '#/components/schemas/BundledProduct'
+      required:
+      - name
+      title: Tariff
+      type: object
+    BundledProduct:
+      example:
+        name: name
+        description: description
+      properties:
+        id:
+          type: string
+        name:
+          maxLength: 128
+          type: string
+        createDate:
+          format: date-time
+          type: string
+        products:
+          $ref: '#/components/schemas/Products'
+        deleted:
+          default: false
+          type: boolean
+      required:
+      - name
+      - products
+      title: BundledProduct
+      type: object
+    Products:
+      properties:
+        calls:
+          type: integer
+        sms:
+          type: integer
+        internet:
+          type: integer
+      title: Products
+      type: object

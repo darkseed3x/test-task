@@ -1,0 +1,7 @@
+README.md
+pom.xml
+src/gen/java/org/manurin/api/TariffApi.java
+src/gen/java/org/manurin/model/BundledProduct.java
+src/gen/java/org/manurin/model/Products.java
+src/gen/java/org/manurin/model/Tariff.java
+src/main/openapi/openapi.yaml
