@@ -3,8 +3,11 @@ info:
   description: Сервис предназначен для создания и обновления тарифов и пакетов услуг
   title: TariffConfigurator
   version: 1.0.0
+  x-product-version: v1
   x-backend:
     name: TariffConfigurator
+servers:
+  - url: /ccs-web/api
 paths:
   /tariff:
     get:

@@ -1,8 +1,8 @@
 greeting:
   message: "hello"
 quarkus:
-  flyway:
-    migrate-at-start: true
+#  flyway:
+#    migrate-at-start: true
   datasource:
     jdbc:
       url: jdbc:postgresql://localhost:5432/TaskBase
@@ -10,4 +10,7 @@ quarkus:
     db-kind: postgresql
     username: postgres
     password: 123123123
-
+  hibernate-orm:
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+    database:
+      generation: drop-and-create
