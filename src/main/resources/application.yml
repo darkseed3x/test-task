@@ -1,3 +1,13 @@
 greeting:
   message: "hello"
+quarkus:
+  flyway:
+    migrate-at-start: true
+  datasource:
+    jdbc:
+      url: jdbc:postgresql://localhost:5432/TaskBase
+      driver: org.postgresql.Driver
+    db-kind: postgresql
+    username: postgres
+    password: 123123123
 

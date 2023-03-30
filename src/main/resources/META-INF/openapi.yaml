@@ -1,43 +1,113 @@
-openapi: 3.0.1
+openapi: 3.0.3
 info:
   description: Сервис предназначен для создания и обновления тарифов и пакетов услуг
-  title: Tariff-Configurator
+  title: TariffConfigurator
   version: 1.0.0
-  x-product-version: v1
   x-backend:
-    name: Tariff-Configurator
-    min-nodes: 1
-servers:
-- url: /web-conf/api
+    name: TariffConfigurator
 paths:
   /tariff:
     get:
+      operationId: tariffGet
+      tags:
+        - it-product-api
+      summary: Метод получения тарифов по id
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: string
+          required: true
       responses:
-        "200":
+        '200':
+          description: OK
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/BundledProduct'
-                type: array
-          description: new fruit resource created
-      x-accepts: application/json
+                $ref: '#/components/schemas/Tariff'
     post:
       operationId: tariffAdd
+      tags:
+        - it-product-api
+      summary: Метод добавления тарифов
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Tariff'
       responses:
-        "200":
-          content:
-            application/json: {}
-          description: new fruit resource created
-      summary: Метод добавления таривоф
-      x-content-type: application/json
-      x-accepts: application/json
-      x-contentType: application/json
+        '200':
+          description: OK
+    put:
+      operationId: tariffUpdate
+      tags:
+        - it-product-api
+      summary: Метод обновления тарифов
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tariff'
+      responses:
+        '200':
+          description: OK
+  /bundledProduct:
+    get:
+        operationId: BundleGet
+        tags:
+          - it-product-api
+        summary: Метод получения пакетов по id
+        parameters:
+          - in: query
+            name: id
+            schema:
+              type: string
+            required: true
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/BundledProduct'
+    post:
+      operationId: BundleAdd
+      tags:
+        - it-product-api
+      summary: Метод добавления пакетов
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BundledProduct'
+      responses:
+        '200':
+          description: OK
+    put:
+      operationId: BundleUpdate
+      tags:
+        - it-product-api
+      summary: Метод обновления пакетов
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BundledProduct'
+      responses:
+        '200':
+          description: OK
 components:
   schemas:
     Tariff:
