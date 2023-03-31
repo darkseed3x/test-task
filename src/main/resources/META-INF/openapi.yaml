@@ -7,7 +7,7 @@ info:
   x-backend:
     name: TariffConfigurator
 servers:
-  - url: /ccs-web/api
+  - url: /tcr-web
 paths:
   /tariff:
     get:

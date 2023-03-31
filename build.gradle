@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'io.quarkus'
-    id "org.openapi.generator" version "6.0.0"
+//    id "org.openapi.generator" version "6.0.0"
 }
 
 repositories {
@@ -52,17 +52,17 @@ compileTestJava {
 }
 
 
-openApiValidate {
-    inputSpec = "${rootDir}/src/main/openapi/openapi.yaml"
-}
-
-openApiGenerate {
-    generatorName = 'jaxrs-spec'
-    configFile = "${rootDir}/src/main/resources/config.json"
-    inputSpec = "${rootDir}/src/main/resources/META-INF/openapi.yaml"
-    outputDir = "${rootDir}"
-}
-
-sourceSets.main.java.srcDir "${rootDir}/src/gen/java"
-
-compileJava.dependsOn tasks.openApiValidate, tasks.openApiGenerate
+//openApiValidate {
+//    inputSpec = "${rootDir}/src/main/openapi/openapi.yaml"
+//}
+//
+//openApiGenerate {
+//    generatorName = 'jaxrs-spec'
+//    configFile = "${rootDir}/src/main/resources/config.json"
+//    inputSpec = "${rootDir}/src/main/resources/META-INF/openapi.yaml"
+//    outputDir = "${rootDir}"
+//}
+//
+//sourceSets.main.java.srcDir "${rootDir}/src/gen/java"
+//
+//compileJava.dependsOn tasks.openApiValidate, tasks.openApiGenerate

@@ -8,13 +8,13 @@ import java.time.OffsetDateTime;
 
 
 @Entity
-@Table(name = "BUNDLED_PRODUCTS")
-public class BundledProductEntity extends PanacheEntityBase {
+@Table(name = "TARIFFS")
+public class TariffEntity extends PanacheEntityBase {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(name = "bundled_product_id", unique = true)
+    @Column(name = "tariff_id", unique = true)
     private String id;
 
 
@@ -24,44 +24,41 @@ public class BundledProductEntity extends PanacheEntityBase {
     private OffsetDateTime createDate = OffsetDateTime.now();
 
 
-    private Integer calls;
-    private Integer sms;
-    private Integer internet;
+
+    @OneToOne
+    @JoinColumn(name = "bundled_product_id")
+    private BundledProductEntity bundledProductId;
+
+
     @Column(columnDefinition = "boolean not null")
     private boolean deleted = false;
+    @Column(columnDefinition = "boolean not null")
+    private boolean archived = false;
 
-    public BundledProductEntity setId(String id) {
+    public TariffEntity setId(String id) {
         this.id = id;
         return this;
     }
 
-    public BundledProductEntity setName(String name) {
+    public TariffEntity setName(String name) {
         this.name = name;
         return this;
     }
 
-    public BundledProductEntity setCreateDate(OffsetDateTime createDate) {
+    public TariffEntity setCreateDate(OffsetDateTime createDate) {
         this.createDate = createDate;
         return this;
     }
 
-    public BundledProductEntity setCalls(Integer calls) {
-        this.calls = calls;
-        return this;
-    }
-
-    public BundledProductEntity setSms(Integer sms) {
-        this.sms = sms;
-        return this;
-    }
-
-    public BundledProductEntity setInternet(Integer internet) {
-        this.internet = internet;
-        return this;
-    }
-
-    public BundledProductEntity setDeleted(boolean deleted) {
+    public TariffEntity setDeleted(boolean deleted) {
         this.deleted = deleted;
+        return this;
+    }
+
+
+
+    public TariffEntity setArchived(boolean archived) {
+        this.archived = archived;
         return this;
     }
 
@@ -77,19 +74,14 @@ public class BundledProductEntity extends PanacheEntityBase {
         return createDate;
     }
 
-    public Integer getCalls() {
-        return calls;
-    }
-
-    public Integer getSms() {
-        return sms;
-    }
-
-    public Integer getInternet() {
-        return internet;
-    }
 
     public boolean isDeleted() {
         return deleted;
+    }
+
+
+
+    public boolean isArchived() {
+        return archived;
     }
 }
