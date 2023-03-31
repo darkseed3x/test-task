@@ -2,7 +2,9 @@ package org.manurin.repository;
 
 import org.manurin.api.model.BundledProduct;
 import org.manurin.api.model.Products;
+import org.manurin.api.model.Tariff;
 import org.manurin.repository.model.BundledProductEntity;
+import org.manurin.repository.model.TariffEntity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
@@ -11,7 +13,7 @@ import javax.transaction.Transactional;
 public class ConfRepository {
 
     @Transactional
-    public void create(BundledProduct item) {
+    public BundledProductEntity createBundle(BundledProduct item) {
         BundledProductEntity bundle =
                 new BundledProductEntity()
                         .setName(item.getName())
@@ -21,10 +23,11 @@ public class ConfRepository {
                         .setInternet(item.getProducts().getInternet());
 
         bundle.persist();
+        return bundle;
     }
 
     @Transactional
-    public void update(String id, BundledProduct item) {
+    public void updateBundle(String id, BundledProduct item) {
         BundledProductEntity bundle = BundledProductEntity.findById(id);
         bundle
                 .setName(item.getName())
@@ -37,7 +40,7 @@ public class ConfRepository {
     }
 
     @Transactional
-    public BundledProduct get(String id) {
+    public BundledProduct getBundle(String id) {
         BundledProductEntity bundle = BundledProductEntity.findById(id);
         return new BundledProduct()
                 .products(
@@ -50,6 +53,54 @@ public class ConfRepository {
                 .id(bundle.getId())
                 .name(bundle.getName())
                 .deleted(bundle.isDeleted());
+
+    }
+
+    @Transactional
+    public void createTariff(Tariff item) {
+        TariffEntity bundle =
+                new TariffEntity()
+                        .setName(item.getName())
+                        .setDeleted(item.getDeleted())
+                        .setArchived(item.getArchived())
+
+                        .setBundledProductId(
+                                item.getBundledProduct() != null ?
+                                        createBundle(item.getBundledProduct()) :
+                                        null
+                        );
+
+
+        bundle.persist();
+    }
+
+    @Transactional
+    public void updateTariff(String id, Tariff item) {
+        TariffEntity bundle = TariffEntity.findById(id);
+        bundle
+                .setName(item.getName())
+                .setDeleted(item.getDeleted())
+                .setArchived(item.getArchived())
+
+                .setBundledProductId(
+                        item.getBundledProduct() != null ?
+                                createBundle(item.getBundledProduct()) :
+                                null
+                )
+
+                .persist();
+    }
+
+    @Transactional
+    public Tariff getTariff(String id) {
+        TariffEntity tariff = TariffEntity.findById(id);
+        return new Tariff()
+                .bundledProduct(getBundle(tariff.getBundledProductId().getId()))
+                .createDate(tariff.getCreateDate())
+                .id(tariff.getId())
+                .name(tariff.getName())
+                .deleted(tariff.isDeleted())
+                .archived(tariff.isArchived());
 
     }
 }

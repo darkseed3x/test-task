@@ -61,6 +61,10 @@ public class TariffEntity extends PanacheEntityBase {
         this.archived = archived;
         return this;
     }
+    public TariffEntity setBundledProductId(BundledProductEntity bundledProductId) {
+        this.bundledProductId = bundledProductId;
+        return this;
+    }
 
     public String getId() {
         return id;
@@ -83,5 +87,10 @@ public class TariffEntity extends PanacheEntityBase {
 
     public boolean isArchived() {
         return archived;
+    }
+
+
+    public BundledProductEntity getBundledProductId() {
+        return bundledProductId;
     }
 }

@@ -17,34 +17,36 @@ public class TaskController implements ServiceConfigApi {
     @Override
     public Response bundleAdd(BundledProduct bundledProduct) {
 
-        repository.create(bundledProduct);
+        repository.createBundle(bundledProduct);
         return Response.ok().build();
     }
 
     @Override
     public Response bundleGet(String id) {
 
-        return Response.ok().entity(repository.get(id)).build();
+        return Response.ok().entity(repository.getBundle(id)).build();
     }
 
     @Override
     public Response bundleUpdate(String id, BundledProduct bundledProduct) {
-        repository.update(id,bundledProduct);
+        repository.updateBundle(id, bundledProduct);
         return Response.ok().build();
     }
 
     @Override
     public Response tariffAdd(Tariff tariff) {
+        repository.createTariff(tariff);
         return Response.ok().build();
     }
 
     @Override
     public Response tariffGet(String id) {
-        return Response.ok().build();
+        return Response.ok(repository.getTariff(id)).build();
     }
 
     @Override
     public Response tariffUpdate(String id, Tariff tariff) {
+        repository.updateTariff(id, tariff);
         return Response.ok().build();
     }
 }
