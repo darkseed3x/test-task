@@ -111,6 +111,39 @@ paths:
       responses:
         '200':
           description: OK
+  /search:
+    get:
+      operationId: search
+      tags:
+        - it-product-api
+      summary: Поиск тарифов по критериям
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+        - in: query
+          name: UnlimInternet
+          schema:
+            type: boolean
+        - in: query
+          name: UnlimCalls
+          schema:
+            type: boolean
+        - in: query
+          name: archived
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tariff'
+
 components:
   schemas:
     Tariff:

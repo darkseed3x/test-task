@@ -1,6 +1,6 @@
 package org.manurin.repository.model;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,9 +9,10 @@ import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "BUNDLED_PRODUCTS")
-public class BundledProductEntity extends PanacheEntityBase {
 
-    @Id
+public class BundledProductEntity extends PanacheEntity {
+
+
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "bundled_product_id", unique = true)

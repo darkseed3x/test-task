@@ -1,16 +1,21 @@
 package org.manurin.repository;
 
 import org.manurin.api.model.BundledProduct;
-import org.manurin.api.model.Products;
 import org.manurin.api.model.Tariff;
 import org.manurin.repository.model.BundledProductEntity;
 import org.manurin.repository.model.TariffEntity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
+import javax.ws.rs.NotFoundException;
+import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class ConfRepository {
+
+
+
 
     @Transactional
     public BundledProductEntity createBundle(BundledProduct item) {
@@ -27,43 +32,32 @@ public class ConfRepository {
     }
 
     @Transactional
-    public void updateBundle(String id, BundledProduct item) {
-        BundledProductEntity bundle = BundledProductEntity.findById(id);
-        bundle
+    public BundledProductEntity updateBundle(String id, BundledProduct item) {
+        Optional<BundledProductEntity> bundledProduct = BundledProductEntity.findByIdOptional(id);
+        BundledProductEntity bundledProductEntity = bundledProduct.orElseThrow(NotFoundException::new);
+        bundledProductEntity
                 .setName(item.getName())
                 .setDeleted(item.getDeleted())
                 .setCalls(item.getProducts().getCalls())
                 .setSms(item.getProducts().getSms())
                 .setInternet(item.getProducts().getInternet())
-
                 .persist();
+        return bundledProductEntity;
     }
 
     @Transactional
-    public BundledProduct getBundle(String id) {
-        BundledProductEntity bundle = BundledProductEntity.findById(id);
-        return new BundledProduct()
-                .products(
-                        new Products()
-                                .calls(bundle.getCalls())
-                                .sms(bundle.getSms())
-                                .internet(bundle.getInternet())
-                )
-                .createDate(bundle.getCreateDate())
-                .id(bundle.getId())
-                .name(bundle.getName())
-                .deleted(bundle.isDeleted());
-
+    public BundledProductEntity getBundle(String id) {
+        Optional<BundledProductEntity> bundledProduct = BundledProductEntity.findByIdOptional(id);
+        return bundledProduct.orElseThrow(NotFoundException::new);
     }
 
     @Transactional
-    public void createTariff(Tariff item) {
-        TariffEntity bundle =
+    public TariffEntity createTariff(Tariff item) {
+        TariffEntity tariff =
                 new TariffEntity()
                         .setName(item.getName())
                         .setDeleted(item.getDeleted())
                         .setArchived(item.getArchived())
-
                         .setBundledProductId(
                                 item.getBundledProduct() != null ?
                                         createBundle(item.getBundledProduct()) :
@@ -71,37 +65,42 @@ public class ConfRepository {
                         );
 
 
-        bundle.persist();
+        tariff.persist();
+        return tariff;
     }
 
     @Transactional
-    public void updateTariff(String id, Tariff item) {
-        TariffEntity bundle = TariffEntity.findById(id);
-        bundle
+    public TariffEntity updateTariff(String id, Tariff item) {
+        Optional<TariffEntity> tariff = TariffEntity.findByIdOptional(id);
+        TariffEntity tariffEntity = tariff.orElseThrow(NotFoundException::new);
+        tariffEntity
                 .setName(item.getName())
                 .setDeleted(item.getDeleted())
                 .setArchived(item.getArchived())
-
                 .setBundledProductId(
                         item.getBundledProduct() != null ?
                                 createBundle(item.getBundledProduct()) :
                                 null
                 )
-
                 .persist();
+        return tariffEntity;
     }
 
     @Transactional
-    public Tariff getTariff(String id) {
-        TariffEntity tariff = TariffEntity.findById(id);
-        return new Tariff()
-                .bundledProduct(getBundle(tariff.getBundledProductId().getId()))
-                .createDate(tariff.getCreateDate())
-                .id(tariff.getId())
-                .name(tariff.getName())
-                .deleted(tariff.isDeleted())
-                .archived(tariff.isArchived());
+    public TariffEntity getTariff(String id) {
+        Optional<TariffEntity> tariff = TariffEntity.findByIdOptional(id);
+        return tariff.orElseThrow(NotFoundException::new);
 
     }
-}
 
+    @Transactional
+    public List<TariffEntity> search(String name, Boolean unlimInternet, Boolean unlimCalls, Boolean archived) {
+
+        List<TariffEntity> tariffEntity = TariffEntity.list("name", name);
+        return tariffEntity.stream()
+                .filter(tariff -> tariff.isArchived() == archived &&
+                        (tariff.getBundledProductId().getInternet() < 0) == unlimInternet &&
+                        (tariff.getBundledProductId().getCalls() < 0) == unlimCalls)
+                .toList();
+    }
+}

@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.jboss.resteasy.reactive.RestQuery;
 import org.manurin.api.model.BundledProduct;
 import org.manurin.api.model.Tariff;
 
@@ -11,10 +12,19 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/tcr-web")
 @Api
 public interface ServiceConfigApi {
+    @Path("/search")
+    @GET
+    @Produces({ "application/json" })
+    @ApiOperation(value = "Поиск тарифов по критериям", notes = "", tags={ "it-product-api" })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Tariff.class) })
+    Response search(@QueryParam("name") @NotNull   String name, @QueryParam("UnlimInternet")   Boolean unlimInternet, @QueryParam("UnlimCalls")   Boolean unlimCalls, @QueryParam("archived")   Boolean archived);
+
 
 
     @Path("/bundledProduct")

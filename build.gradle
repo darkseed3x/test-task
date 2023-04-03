@@ -20,12 +20,14 @@ dependencies {
     implementation 'io.quarkus:quarkus-jdbc-postgresql'
     implementation("io.quarkus:quarkus-hibernate-orm-panache")
     implementation 'io.quarkus:quarkus-arc'
-    implementation group: 'org.projectlombok', name: 'lombok', version: '1.18.26'
-    implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.0.16.Final'
+    implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.0.21.Final'
 
     implementation 'io.quarkus:quarkus-resteasy-reactive'
     implementation group: 'io.swagger', name: 'swagger-annotations', version: '1.6.0'
     implementation 'io.quarkus:quarkus-vertx-web'
+
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'

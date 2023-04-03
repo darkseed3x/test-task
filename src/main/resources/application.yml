@@ -5,12 +5,13 @@ quarkus:
 #    migrate-at-start: true
   datasource:
     jdbc:
-      url: jdbc:postgresql://localhost:5432/TaskBase
+      url: jdbc:postgresql://localhost:5432/mydb
       driver: org.postgresql.Driver
     db-kind: postgresql
-    username: postgres
+    username: van_der_weiss
     password: 123123123
   hibernate-orm:
+    sql-load-script: "import.sql"
     dialect: org.hibernate.dialect.PostgreSQLDialect
     database:
       generation: drop-and-create

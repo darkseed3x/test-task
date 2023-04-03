@@ -1,6 +1,6 @@
 package org.manurin.repository.model;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,14 +9,13 @@ import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "TARIFFS")
-public class TariffEntity extends PanacheEntityBase {
+public class TariffEntity extends PanacheEntity {
 
-    @Id
+
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "tariff_id", unique = true)
     private String id;
-
 
     @Column(columnDefinition = "varchar(128) not null")
     private String name;
