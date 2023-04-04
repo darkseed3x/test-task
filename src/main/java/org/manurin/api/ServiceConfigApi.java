@@ -17,13 +17,13 @@ import java.util.List;
 @Path("/tcr-web")
 @Api
 public interface ServiceConfigApi {
-    @Path("/search")
+    @Path("/tariff/search")
     @GET
     @Produces({ "application/json" })
     @ApiOperation(value = "Поиск тарифов по критериям", notes = "", tags={ "it-product-api" })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Tariff.class) })
-    Response search(@QueryParam("name") @NotNull   String name, @QueryParam("UnlimInternet")   Boolean unlimInternet, @QueryParam("UnlimCalls")   Boolean unlimCalls, @QueryParam("archived")   Boolean archived);
+    Response search(@QueryParam("name")   String name, @QueryParam("UnlimInternet")   Boolean unlimInternet, @QueryParam("UnlimCalls")   Boolean unlimCalls, @QueryParam("archived")   Boolean archived);
 
 
 

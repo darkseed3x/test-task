@@ -1,7 +1,7 @@
 package org.manurin.controller;
 
 
-import com.oracle.svm.core.annotate.Inject;
+
 import org.manurin.api.ServiceConfigApi;
 import org.manurin.api.model.BundledProduct;
 import org.manurin.api.model.Tariff;
@@ -9,6 +9,7 @@ import org.manurin.mapper.CommonMapper;
 import org.manurin.repository.ConfRepository;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 @ApplicationScoped

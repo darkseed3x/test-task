@@ -1,6 +1,6 @@
 package org.manurin.repository.model;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,9 +9,8 @@ import java.time.OffsetDateTime;
 
 @Entity
 @Table(name = "TARIFFS")
-public class TariffEntity extends PanacheEntity {
-
-
+public class TariffEntity extends PanacheEntityBase {
+    @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "tariff_id", unique = true)
@@ -21,7 +20,6 @@ public class TariffEntity extends PanacheEntity {
     private String name;
     @Column(columnDefinition = "timestamp not null")
     private OffsetDateTime createDate = OffsetDateTime.now();
-
 
 
     @OneToOne
@@ -55,11 +53,11 @@ public class TariffEntity extends PanacheEntity {
     }
 
 
-
     public TariffEntity setArchived(boolean archived) {
         this.archived = archived;
         return this;
     }
+
     public TariffEntity setBundledProductId(BundledProductEntity bundledProductId) {
         this.bundledProductId = bundledProductId;
         return this;
@@ -81,7 +79,6 @@ public class TariffEntity extends PanacheEntity {
     public boolean isDeleted() {
         return deleted;
     }
-
 
 
     public boolean isArchived() {
