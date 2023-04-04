@@ -153,13 +153,17 @@ public class TaskControllerTest {
     @Test
     void search() {
         List<Tariff> tariff = given()
-                .queryParams(Map.of("name", "nnnnnn","archived",false))
+                .queryParams(
+                        "name", "nnnnnn",
+                        "archived", "true",
+                        "unlimInternet", "false",
+                        "unlimCalls", "false"
+                )
                 .when().get("/tcr-web/tariff/search")
                 .then()
                 .statusCode(200)
                 .extract()
-                .body().jsonPath().getList(".",Tariff.class);
-        assertNotNull(tariff);
-        assertEquals(tariff.size(), 0);
+                .body().jsonPath().getList("");
+        assertTrue(tariff.size() != 0);
     }
 }

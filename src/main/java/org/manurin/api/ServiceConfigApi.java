@@ -23,7 +23,7 @@ public interface ServiceConfigApi {
     @ApiOperation(value = "Поиск тарифов по критериям", notes = "", tags={ "it-product-api" })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Tariff.class) })
-    Response search(@QueryParam("name")   String name, @QueryParam("UnlimInternet")   Boolean unlimInternet, @QueryParam("UnlimCalls")   Boolean unlimCalls, @QueryParam("archived")   Boolean archived);
+    Response search(@QueryParam("name")   String name, @QueryParam("unlimInternet")   Boolean unlimInternet, @QueryParam("unlimCalls")   Boolean unlimCalls, @QueryParam("archived")   Boolean archived);
 
 
 

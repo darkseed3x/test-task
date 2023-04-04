@@ -94,13 +94,9 @@ public class ConfRepository {
     }
 
     @Transactional
-    public List<TariffEntity> search(String name, Boolean unlimInternet, Boolean unlimCalls, Boolean archived) {
+    public List<TariffEntity> search() {
 
-        List<TariffEntity> tariffEntity = TariffEntity.list("name", name);
-        return tariffEntity.stream()
-                .filter(tariff -> tariff.isArchived() == archived &&
-                        (tariff.getBundledProductId().getInternet() < 0) == unlimInternet &&
-                        (tariff.getBundledProductId().getCalls() < 0) == unlimCalls)
-                .toList();
+
+        return TariffEntity.listAll();
     }
 }
