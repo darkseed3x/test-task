@@ -1,20 +1,16 @@
 package org.manurin.controller;
 
 
-import org.apache.commons.lang3.StringUtils;
 import org.manurin.api.ServiceConfigApi;
 import org.manurin.api.model.BundledProduct;
 import org.manurin.api.model.Tariff;
 import org.manurin.mapper.CommonMapper;
 import org.manurin.repository.ConfRepository;
-import org.manurin.repository.model.TariffEntity;
 import org.manurin.utils.Common;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @ApplicationScoped
 public class TaskController implements ServiceConfigApi {
@@ -78,16 +74,14 @@ public class TaskController implements ServiceConfigApi {
     public Response search(String name, Boolean unlimInternet, Boolean unlimCalls, Boolean archived) {
 
 
-        List<TariffEntity> list = repository.search().stream()
-                .filter(tariff ->
-                        Common.isaBoolean(name, unlimInternet, unlimCalls, archived, tariff)
-                )
-                .toList();
-
-
         return Response
                 .ok()
-                .entity(list)
+                .entity(mapper.map(
+                        repository.search().stream()
+                                .filter(tariff ->
+                                        Common.isaBoolean(name, unlimInternet, unlimCalls, archived, tariff)
+                                )
+                                .toList()))
                 .build();
     }
 }

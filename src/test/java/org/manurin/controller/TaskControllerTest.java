@@ -106,6 +106,31 @@ public class TaskControllerTest {
     }
 
     @Test
+    void tariffDublAdd() {
+        Tariff newTariff = new Tariff()
+                .name("vvvvvv")
+                .deleted(false)
+                .archived(false)
+                .bundledProduct(
+                        new BundledProduct()
+                                .name("gloryBeast")
+                                .deleted(true)
+                                .products(
+                                        new Products()
+                                                .calls(350)
+                                                .sms(100)
+                                                .internet(-1)
+                                )
+                );
+         given()
+                .body(newTariff)
+                .contentType(ContentType.JSON)
+                .when().post("/tcr-web/tariff")
+                .then()
+                .statusCode(500);
+    }
+
+    @Test
     void tariffGet() {
         Tariff tariff = given()
                 .queryParam("id", "71b862e0-d217-11ed-afa1-0242ac120002")

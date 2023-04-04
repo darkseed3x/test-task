@@ -53,6 +53,10 @@ public class ConfRepository {
 
     @Transactional
     public TariffEntity createTariff(Tariff item) {
+        List<TariffEntity> list = TariffEntity.find("name",item.getName()).list();
+       if(list.stream().anyMatch(tariffEntity -> !tariffEntity.isDeleted())){
+           throw new RuntimeException("The name is already in use for not deleting tariff!");
+       }
         TariffEntity tariff =
                 new TariffEntity()
                         .setName(item.getName())
