@@ -111,10 +111,11 @@ paths:
       responses:
         '200':
           description: OK
-  /search:
+  /tariff/search:
     get:
       operationId: search
       tags:
+        -
         - it-product-api
       summary: Поиск тарифов по критериям
       parameters:

@@ -8,11 +8,10 @@ import org.manurin.mapper.CommonMapper;
 import org.manurin.repository.ConfRepository;
 import org.manurin.utils.Common;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
-@ApplicationScoped
+
 public class TaskController implements ServiceConfigApi {
 
     @Inject

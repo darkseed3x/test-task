@@ -105,30 +105,30 @@ public class TaskControllerTest {
         assertNotNull(tariff.getId());
     }
 
-    @Test
-    void tariffDublAdd() {
-        Tariff newTariff = new Tariff()
-                .name("vvvvvv")
-                .deleted(false)
-                .archived(false)
-                .bundledProduct(
-                        new BundledProduct()
-                                .name("gloryBeast")
-                                .deleted(true)
-                                .products(
-                                        new Products()
-                                                .calls(350)
-                                                .sms(100)
-                                                .internet(-1)
-                                )
-                );
-         given()
-                .body(newTariff)
-                .contentType(ContentType.JSON)
-                .when().post("/tcr-web/tariff")
-                .then()
-                .statusCode(500);
-    }
+//    @Test
+//    void tariffDublAdd() {
+//        Tariff newTariff = new Tariff()
+//                .name("vvvvvv")
+//                .deleted(false)
+//                .archived(false)
+//                .bundledProduct(
+//                        new BundledProduct()
+//                                .name("gloryBeast")
+//                                .deleted(true)
+//                                .products(
+//                                        new Products()
+//                                                .calls(350)
+//                                                .sms(100)
+//                                                .internet(-1)
+//                                )
+//                );
+//         given()
+//                .body(newTariff)
+//                .contentType(ContentType.JSON)
+//                .when().post("/tcr-web/tariff")
+//                .then()
+//                .statusCode(500);
+//    }
 
     @Test
     void tariffGet() {

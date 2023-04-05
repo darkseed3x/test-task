@@ -3,8 +3,9 @@ package org.manurin.utils;
 import org.apache.commons.lang3.StringUtils;
 import org.manurin.repository.model.TariffEntity;
 
-public class Common {
-
+public final class Common {
+    private Common() {
+    }
 
     public static boolean isaBoolean(String name, Boolean unlimInternet, Boolean unlimCalls, Boolean archived, TariffEntity tariff) {
         return nameChecker(name, tariff.getName()) &&
